@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ミヤケ | つくったもの(B案・カード型)</title>
+<meta name="description" content="エンタメの「好き」をサービスにする個人開発者。読書アプリ「なかみの本棚」、水墨画アプリ「Sumi」、ポッドキャスト、Jリーグ観戦サイトをつくって運用しています。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ミヤケ | つくったもの">
+<meta property="og:description" content="エンタメの「好き」をサービスにする個人開発者。読書アプリ「なかみの本棚」、水墨画アプリ「Sumi」、ポッドキャスト、Jリーグ観戦サイトをつくって運用しています。">
+<meta property="og:url" content="https://syake03.github.io/">
+<meta property="og:image" content="https://syake03.github.io/assets/ogp.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@syake1001">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23FAF9F6'/%3E%3Crect x='26' y='8' width='13' height='34' fill='%232F5170'/%3E%3Cpath d='M26 42l6.5-8 6.5 8z' fill='%23FAF9F6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600&display=swap">
+<style>
+  /* B案: カード型(以前の版に近い見え方) */
+  :root {
+    --bg:#FAF9F7; --card:#FFFFFF; --ink:#1F2430; --ink-2:#6B7280;
+    --ai:#2F5170; --rule:#E9E5DC;
+    --shadow: 0 1px 2px rgba(20,24,34,.05), 0 8px 24px rgba(20,24,34,.06);
+    --t-hero: clamp(2.7rem,1.4rem + 7vw,4.4rem);
+    --t-feat: clamp(1.3rem,1rem + 1.8vw,1.7rem);
+    --t-item: clamp(1.05rem,.96rem + .7vw,1.24rem);
+    --t-body: .89rem; --t-meta:.685rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14161C; --card:#1D2029; --ink:#E9E9EE; --ink-2:#9AA0AD; --ai:#8FB0D6; --rule:#2B2F3A;
+            --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25); }
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic Medium",system-ui,sans-serif;
+    font-size:15px;line-height:1.85;letter-spacing:.02em;line-break:strict;-webkit-font-smoothing:antialiased}
+  p{text-wrap:pretty}
+  h1,h2,h3,.lede{font-feature-settings:"palt";text-wrap:balance}
+  .wrap{max-width:620px;margin:0 auto;padding:clamp(44px,10vw,88px) clamp(22px,6vw,40px) 76px}
+  .label{font-size:var(--t-meta);font-weight:700;letter-spacing:.4em;color:var(--ink-2)}
+  .kicker{color:var(--ai);margin-bottom:clamp(16px,4vw,24px)}
+  h1{font-family:"Zen Old Mincho","Hiragino Mincho ProN",serif;font-size:var(--t-hero);font-weight:600;
+     line-height:1.04;letter-spacing:.07em;margin-bottom:22px}
+  .lede{font-size:clamp(1rem,.94rem + .5vw,1.08rem);line-height:1.95;max-width:30em;margin-bottom:24px}
+  .lede em{font-style:normal;background:linear-gradient(transparent 66%,color-mix(in srgb,var(--ai) 16%,transparent) 0)}
+  .note{font-size:var(--t-body);color:var(--ink-2);line-height:1.9;max-width:32em}
+  .facts{display:flex;flex-wrap:wrap;gap:0 clamp(24px,7vw,46px);margin-top:clamp(30px,7vw,42px);
+         padding-top:20px;border-top:1px solid var(--rule)}
+  .fact b{display:block;font-size:clamp(1.4rem,1.1rem + 1.5vw,1.7rem);font-weight:600;line-height:1.3;font-variant-numeric:tabular-nums}
+  .fact span{font-size:var(--t-meta);letter-spacing:.14em;color:var(--ink-2)}
+
+  .feature{display:block;margin-top:clamp(52px,12vw,78px);text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--rule);border-radius:18px;box-shadow:var(--shadow);
+    overflow:hidden;transition:transform .18s ease}
+  .feature img{width:100%;height:auto;aspect-ratio:1000/660;object-fit:cover;display:block;border-bottom:1px solid var(--rule)}
+  .feature h3{font-size:var(--t-feat);font-weight:700;line-height:1.4;margin:18px 20px 6px}
+  .feature p{font-size:var(--t-body);color:var(--ink-2);margin:0 20px}
+  .feature .meta{display:inline-flex;gap:9px;margin:12px 20px 20px;font-size:var(--t-meta);letter-spacing:.16em;color:var(--ai)}
+
+  h2{margin:clamp(56px,13vw,84px) 0 16px}
+  .works{list-style:none;display:grid;gap:13px}
+  .work a{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;
+    background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:18px 20px;
+    box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:transform .18s ease,border-color .18s ease}
+  .work h3{font-size:var(--t-item);font-weight:700;line-height:1.45;margin-bottom:4px}
+  .work p{font-size:var(--t-body);line-height:1.8;color:var(--ink-2)}
+  .work .meta{display:block;margin-top:8px;font-size:var(--t-meta);letter-spacing:.16em;color:var(--ai)}
+  .arrow{font-size:.9rem;color:var(--ink-2);transition:transform .3s cubic-bezier(.22,1,.36,1),color .3s ease}
+  a:active{opacity:.6}
+  @media (hover:hover){
+    .work a:hover,.feature:hover{transform:translateY(-2px);border-color:var(--ink-2)}
+    .work a:hover .arrow,.feature:hover .arrow{transform:translateX(4px);color:var(--ai)}
+  }
+  a:focus-visible{outline:2px solid var(--ai);outline-offset:4px}
+  footer{margin-top:clamp(52px,12vw,78px);padding-top:28px;border-top:1px solid var(--rule)}
+  .x-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-size:.95rem;
+    letter-spacing:.05em;padding:10px 22px;border:1px solid var(--rule);border-radius:999px;background:var(--card);box-shadow:var(--shadow)}
+  .x-link svg{width:14px;height:14px;fill:currentColor}
+  .colophon{margin-top:24px;font-size:var(--t-meta);letter-spacing:.1em;color:var(--ink-2)}
+  @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="label kicker">INDIE MAKER — ENTERTAINMENT</p>
+    <h1>ミヤケ</h1>
+    <p class="lede">好きなエンタメの、<em>楽しみ方のほうを</em>つくっています。読書、水墨画、ラジオ、サッカー。ひとりで企画して、つくって、運用まで続けているものを並べました。</p>
+    <p class="note">つくるより、続けるほうが難しい。だから設計の種明かしと、うまくいかなかったときの数字のほうをよく書きます。</p>
+    <div class="facts">
+      <div class="fact"><b>2</b><span>IOS APPS</span></div>
+      <div class="fact"><b>75</b><span>EPISODES</span></div>
+      <div class="fact"><b>3</b><span>WEB SITES</span></div>
+    </div>
+  </header>
+
+  <a class="feature" href="https://apps.apple.com/jp/app/id6789905132">
+    <img src="../assets/nakami-hero.jpg" alt="なかみの本棚の画面。集めた言葉が縦に並んでいる" width="1000" height="660" fetchpriority="high" decoding="async">
+    <h3>なかみの本棚</h3>
+    <p>読んで線を引いた言葉を、しまっておく場所。本の一行も、母の一言も、同じ棚に。静かに使える読書アプリです。</p>
+    <span class="meta">IOS — APP STORE <span class="arrow" aria-hidden="true">→</span></span>
+  </a>
+
+  <h2 class="label">OTHER WORKS</h2>
+  <ul class="works">
+    <li class="work"><a href="https://apps.apple.com/jp/app/id6795591095"><div>
+      <h3>Sumi: Living Ink Paintings</h3>
+      <p>水墨画が、ゆっくり動きつづける。眺めるためだけのアプリ。買い切り、広告なし、通知なし。</p>
+      <span class="meta">IOS — APP STORE</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
+
+    <li class="work"><a href="https://youtube.com/@new-standard-radio1"><div>
+      <h3>ニュースタンダードラジオ</h3>
+      <p>中学からの同級生と、30代の仕事・お金・暮らしをゆるく話しています。75回配信中。</p>
+      <span class="meta">PODCAST — YOUTUBE / SPOTIFY</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
+
+    <li class="work"><a href="https://j-mikata.net"><div>
+      <h3>Jのミカタ</h3>
+      <p>Jリーグを観に行く人のための、実用の観戦ガイド。全国のスタジアムを取材と実測で。</p>
+      <span class="meta">WEB</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
+
+    <li class="work"><a href="https://syake03.github.io/kosodate-cards/"><div>
+      <h3>子育ての地図</h3>
+      <p>迷いやすいところに、根拠のある道しるべを。</p>
+      <span class="meta">WEB</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
+
+    <li class="work"><a href="https://japantriptools.com"><div>
+      <h3>japantriptools</h3>
+      <p>訪日旅行者向けの実用ツール群。こちらは英語のみ。</p>
+      <span class="meta">WEB — ENGLISH</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
+  </ul>
+
+  <footer>
+    <a class="x-link" href="https://x.com/syake1001">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      @syake1001
+    </a>
+    <p class="colophon">© 2026 ミヤケ</p>
+  </footer>
+
+</div>
+</body>
+</html>

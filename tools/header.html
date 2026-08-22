@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<title>Xヘッダーの版下 1500x500</title>
+<!--
+  X(旧Twitter)のヘッダー画像 1500x500 の版下。
+  安全域: 左下(アイコンが重なる 約230x150)と、下端 約90px には要素を置かない。
+  端末によって左右が切られるので、大事なものは中央寄りに。
+  ハブサイト(index.html)と同じ配色・同じ書体で作ること。
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600&display=block">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{ --bg:#FAF9F6; --ink:#22201C; --ink2:#6E675B; --ai:#2F5170; --rule:#E4DFD4; }
+  body{
+    width:1500px;height:500px;overflow:hidden;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;
+    display:grid;grid-template-columns:1fr auto;align-items:center;
+    padding:0 84px 0 96px;gap:64px;
+  }
+  .kicker{font-size:15px;font-weight:700;letter-spacing:.42em;color:var(--ai);margin-bottom:26px}
+  h1{
+    font-family:"Zen Old Mincho",serif;font-weight:600;
+    font-size:45px;line-height:1.5;letter-spacing:.06em;
+    font-feature-settings:"palt";
+  }
+  .sub{margin-top:22px;font-size:17px;letter-spacing:.06em;color:var(--ink2)}
+  /* 左下はアイコンが重なるので、文字は上寄せにして下端を空ける */
+  .left{padding-bottom:78px}
+
+  .marks{display:flex;gap:24px}
+  figure{width:140px;margin:0;text-align:center}
+  figure img{
+    width:140px;height:140px;object-fit:cover;display:block;
+    border:1px solid var(--rule);border-radius:16px;background:#fff;
+  }
+  figcaption{margin-top:12px;font-size:12px;letter-spacing:.04em;color:var(--ink2);line-height:1.5}
+</style></head>
+<body>
+  <div class="left">
+    <p class="kicker">INDIE MAKER — ENTERTAINMENT</p>
+    <h1>好きなエンタメの、<br>楽しみ方のほうをつくる。</h1>
+    <p class="sub">アプリ・サイト・ラジオ / ぜんぶひとりで</p>
+  </div>
+  <div class="marks">
+    <figure><img src="marks/nakami.jpg" alt=""><figcaption>なかみの本棚</figcaption></figure>
+    <figure><img src="marks/sumi.jpg" alt=""><figcaption>Sumi</figcaption></figure>
+    <figure><img src="marks/nsr.jpg" alt=""><figcaption>ラジオ</figcaption></figure>
+    <figure><img src="marks/jmikata.jpg" alt=""><figcaption>Jのミカタ</figcaption></figure>
+  </div>
+</body></html>

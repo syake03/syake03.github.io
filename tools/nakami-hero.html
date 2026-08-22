@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<title>なかみの本棚 ヒーロー画像の版下</title>
+<!--
+  ハブサイトの主役画像(assets/nakami-hero.jpg)の版下。1200x820で撮る。
+  配色・組版は なかみの本棚 の src/theme/tokens.ts に合わせている
+  (紙#F7F4ED / 墨#26241F / 藍#2F5170 / 影禁止・1px罫線・明朝は言葉本文のみ)。
+
+  ⚠️ 載せる言葉は「パブリックドメイン」か「本人の言葉」だけにすること。
+     docs/feed-redesign.html のモックにはドラえもん・52ヘルツのクジラたちの
+     実在の引用が入っているので、あれをそのまま公開物に使わない。
+-->
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#F7F4ED; --ink:#26241F; --soft:#8B8578; --ai:#2F5170; --hair:#DDD6C8;
+    --serif:"Hiragino Mincho ProN","Yu Mincho",serif;
+    --sans:"Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;
+  }
+  body{
+    width:1000px;height:660px;overflow:hidden;
+    background:#EAE5D9;
+    font-family:var(--sans);color:var(--ink);
+    display:flex;justify-content:center;align-items:flex-start;
+  }
+  .phone{
+    width:474px;margin-top:44px;
+    background:var(--paper);
+    border:1px solid #CFC8B8;border-radius:30px 30px 0 0;
+    padding:26px 0 0;overflow:hidden;height:616px;
+  }
+  .appbar{
+    font-family:var(--serif);font-size:19px;letter-spacing:.14em;
+    padding:4px 24px 16px;
+  }
+  .tabs{display:flex;gap:22px;padding:0 24px 14px;font-size:12.5px;color:var(--soft);letter-spacing:.08em}
+  .tabs .on{color:var(--ink);font-weight:600;border-bottom:2px solid var(--ai);padding-bottom:5px}
+  .feed{padding:0 24px}
+  .entry{padding:20px 0;border-top:1px solid var(--hair)}
+  .who{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--soft);margin-bottom:11px}
+  .av{width:18px;height:18px;border-radius:50%;border:1px solid var(--hair);background:#E7E1D3}
+  .q{font-family:var(--serif);font-size:16.5px;line-height:2.05;letter-spacing:.02em}
+  .src{margin-top:10px;font-size:11.5px;color:var(--soft);letter-spacing:.04em}
+  .tags{margin-top:11px;display:flex;gap:7px}
+  .tag{font-size:10.5px;color:var(--ai);border:1px solid #C9D2DD;border-radius:999px;padding:2px 10px}
+</style></head>
+<body>
+  <div class="phone">
+    <div class="appbar">なかみの本棚</div>
+    <div class="tabs"><span class="on">みんなの言葉</span><span>じぶんの棚</span><span>さがす</span></div>
+    <div class="feed">
+
+      <div class="entry">
+        <div class="who"><span class="av"></span>ミヤケ</div>
+        <p class="q">山路を登りながら、こう考えた。智に働けば角が立つ。情に棹させば流される。意地を通せば窮屈だ。とかくに人の世は住みにくい。</p>
+        <p class="src">―― 夏目漱石『草枕』</p>
+        <div class="tags"><span class="tag">はじまりの一行</span><span class="tag">名文</span></div>
+      </div>
+
+      <div class="entry">
+        <div class="who"><span class="av"></span>ミヤケ</div>
+        <p class="q">ありがとう。</p>
+        <p class="src">―― 母の言葉</p>
+        <div class="tags"><span class="tag">本じゃない言葉</span></div>
+      </div>
+
+      <div class="entry">
+        <div class="who"><span class="av"></span>ミヤケ</div>
+        <p class="q">よかった言葉は、二度目に読むときのほうが、もっとよかったりする。</p>
+        <p class="src">―― 自分のメモ</p>
+      </div>
+
+    </div>
+  </div>
+</body></html>

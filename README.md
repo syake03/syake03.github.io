@@ -53,3 +53,24 @@ sips -z 630 1200 -s format jpeg -s formatOptions 82 /tmp/ogp_raw.png --out asset
 
 - [ ] 顔写真アイコン(index.html にはまだ入れていない。入れるなら名乗りの上に小さく)
 - [ ] 「本業は映像配信サービスの事業企画」の一文を戻すかどうか → Jのミカタの匿名運営と衝突するため保留中
+
+## スクリーンショットを撮るときの注意(実際に踏んだ)
+
+macOS の Chrome は **ウィンドウ幅を約460pxより狭くできない**。
+`--window-size=430,H` を指定すると、**約460pxで組んだpage を430pxぶんだけ切り取った画像**が出てきて、
+右端の文字が欠ける(「うまくいかなかった」が「くいかなかった」になる等)。
+`--force-device-scale-factor` や `--headless=new` を変えても直らない。
+
+→ **必ず幅500px以上で撮る。** 撮ったあとは右余白が左と対称かを必ず確認すること。
+サイト自体は正常でも、この撮り方だと壊れた画像ができあがる。
+
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+  --hide-scrollbars --force-device-scale-factor=2 --window-size=500,2400 \
+  --virtual-time-budget=7000 --screenshot=/tmp/s.png "http://localhost:4321/"
+```
+
+## Xのヘッダー画像
+
+版下は `tools/header.html`(1500x500)。書き出し済みは `assets/x-header.jpg`。
+**左下(アイコンが重なる)と下端には要素を置かない。** 素材は `tools/marks/` の4点。
