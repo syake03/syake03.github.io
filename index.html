@@ -3,239 +3,400 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ミヤケ | 個人開発</title>
-<meta name="description" content="エンタメの「好き」をサービスにする個人開発者。読書アプリ、水墨画アプリ、ポッドキャスト、Jリーグ観戦サイトなどを作っています。">
+<title>ミヤケ | つくったもの</title>
+<meta name="description" content="エンタメの「好き」をサービスにする個人開発者。読書アプリ、水墨画アプリ、ポッドキャスト、Jリーグ観戦サイトをつくって運用しています。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ミヤケ | 個人開発">
-<meta property="og:description" content="エンタメの「好き」をサービスにする個人開発者。読書アプリ、水墨画アプリ、ポッドキャスト、Jリーグ観戦サイトなどを作っています。">
+<meta property="og:title" content="ミヤケ | つくったもの">
+<meta property="og:description" content="エンタメの「好き」をサービスにする個人開発者。読書アプリ、水墨画アプリ、ポッドキャスト、Jリーグ観戦サイトをつくって運用しています。">
 <meta property="og:url" content="https://syake03.github.io/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://syake03.github.io/assets/ogp.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@syake1001">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a1a2e'/%3E%3Ctext x='32' y='44' font-size='34' font-family='sans-serif' font-weight='700' fill='%23e8e6f0' text-anchor='middle'%3E%E3%83%9F%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23F7F4ED'/%3E%3Crect x='26' y='8' width='13' height='34' fill='%232F5170'/%3E%3Cpath d='M26 42l6.5-8 6.5 8z' fill='%23F7F4ED'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600&display=swap">
 <style>
+  /* ============================================================
+     紙と墨
+     なかみの本棚(紙#F7F4ED/墨/藍)・Sumi(水墨画)・ラジオ(クリーム地に黒)
+     — 3つのプロダクトが実際に共有している色を、そのまま土台にした。
+
+     設計の約束:
+       ・カードを使わない(等価な選択肢に見えてしまう)。境界は1pxの罫線だけ
+       ・影は使わない
+       ・画像はページ全体で1枚だけ
+       ・色は「地・文字・アクセント」の3つ。アクセントは藍1色
+       ・JSは0行
+     ============================================================ */
   :root {
-    --bg: #faf9f7;
-    --surface: #ffffff;
-    --text: #1f2430;
-    --text-sub: #6b7280;
-    --line: #e7e4de;
-    --accent: #2f3b52;
-    --accent-soft: #eef0f4;
-    --shadow: 0 1px 3px rgba(20, 24, 34, 0.06), 0 6px 20px rgba(20, 24, 34, 0.05);
+    --paper:   #F7F4ED;
+    --paper-2: #F1EDE3;
+    --sumi:    #26241F;
+    --sumi-2:  #6B6355;   /* 対 紙 5.4:1 */
+    --ai:      #2F5170;   /* 対 紙 7.6:1 */
+    --rule:    #DCD5C7;
+    --grain:   0.035;
+
+    /* ジャンプ率は極端に。中間サイズを作らない */
+    --t-hero: clamp(3rem, 1.4rem + 8.6vw, 5.4rem);
+    --t-feat: clamp(1.38rem, 1rem + 2.1vw, 1.95rem);
+    --t-item: clamp(1.12rem, 0.98rem + 0.9vw, 1.42rem);
+    --t-body: clamp(0.875rem, 0.84rem + 0.18vw, 0.92rem);
+    --t-meta: 0.685rem;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #14161c;
-      --surface: #1d2029;
-      --text: #e9e9ee;
-      --text-sub: #9aa0ad;
-      --line: #2b2f3a;
-      --accent: #c7cede;
-      --accent-soft: #262a35;
-      --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+      --paper:   #16150F;
+      --paper-2: #1E1C15;
+      --sumi:    #EDE9DE;
+      --sumi-2:  #A79E8C;
+      --ai:      #8FB0D6;
+      --rule:    #33302A;
+      --grain:   0.05;
     }
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium", "Noto Sans JP", sans-serif;
-    line-height: 1.7;
+    background: var(--paper);
+    color: var(--sumi);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium",
+                 "Noto Sans JP", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.85;
+    letter-spacing: 0.02em;
+    line-break: strict;
     -webkit-font-smoothing: antialiased;
   }
+  p { text-wrap: pretty; }
+  h1, h2, h3, .lede { font-feature-settings: "palt"; text-wrap: balance; }
+
+  /* 紙の粒子。うっすらで足りる */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: var(--grain);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
   .wrap {
-    max-width: 560px;
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
     margin: 0 auto;
-    padding: 56px 20px 64px;
+    padding: clamp(46px, 11vw, 92px) clamp(22px, 6vw, 40px) 76px;
   }
 
-  /* Header */
-  header { text-align: center; margin-bottom: 44px; }
-  /* TODO: 顔写真アイコンが用意できたら .avatar を <img> に差し替える */
-  .avatar {
-    width: 84px; height: 84px;
-    margin: 0 auto 20px;
-    border-radius: 26px;
-    background: var(--accent);
-    color: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem; font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-  h1 {
-    font-size: 1.55rem;
+  .label {
+    font-size: var(--t-meta);
     font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-bottom: 8px;
-  }
-  .role {
-    font-size: 0.92rem;
-    color: var(--text-sub);
-    margin-bottom: 20px;
-  }
-  .bio {
-    font-size: 0.9rem;
-    color: var(--text-sub);
-    text-align: left;
-    max-width: 460px;
-    margin: 0 auto;
+    letter-spacing: 0.4em;
+    color: var(--sumi-2);
   }
 
-  /* Section */
-  h2 {
-    font-size: 0.8rem;
+  /* ---------- 名乗り ---------- */
+  .kicker { color: var(--ai); margin-bottom: clamp(18px, 4.5vw, 26px); }
+
+  h1 {
+    font-family: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+    font-size: var(--t-hero);
     font-weight: 600;
-    color: var(--text-sub);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    margin: 40px 0 16px;
+    line-height: 1.04;
+    letter-spacing: 0.07em;
+    margin-bottom: 24px;
   }
 
-  /* Cards */
-  .cards { display: grid; gap: 14px; }
-  .card {
+  .lede {
+    font-size: clamp(1rem, 0.94rem + 0.5vw, 1.1rem);
+    line-height: 1.95;
+    max-width: 30em;
+    margin-bottom: 26px;
+  }
+  .lede em {
+    font-style: normal;
+    background: linear-gradient(transparent 66%, color-mix(in srgb, var(--ai) 18%, transparent) 0);
+  }
+
+  .note {
+    font-size: var(--t-body);
+    color: var(--sumi-2);
+    line-height: 1.9;
+    max-width: 32em;
+  }
+
+  /* ---------- 実数 ---------- */
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 clamp(24px, 7vw, 46px);
+    margin-top: clamp(32px, 7.5vw, 44px);
+    padding-top: 22px;
+    border-top: 1px solid var(--rule);
+  }
+  .fact { padding: 3px 0; }
+  .fact b {
     display: block;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 18px 20px;
+    font-family: "Zen Old Mincho", serif;
+    font-size: clamp(1.45rem, 1.1rem + 1.6vw, 1.8rem);
+    font-weight: 600;
+    line-height: 1.25;
+    font-variant-numeric: tabular-nums;
+  }
+  .fact span {
+    font-size: var(--t-meta);
+    letter-spacing: 0.14em;
+    color: var(--sumi-2);
+  }
+
+  /* ---------- 一番押したいもの(このページ唯一の画像) ---------- */
+  .feature {
+    display: block;
+    margin-top: clamp(56px, 13vw, 84px);
     text-decoration: none;
     color: inherit;
-    box-shadow: var(--shadow);
-    transition: transform 0.15s ease, border-color 0.15s ease;
   }
-  .card:hover, .card:active {
-    transform: translateY(-1px);
-    border-color: var(--text-sub);
+  .feature img {
+    width: 100%;
+    height: auto;          /* height属性のプレゼンテーションヒントを打ち消す */
+    aspect-ratio: 903 / 677;
+    object-fit: cover;
+    display: block;
+    border: 1px solid var(--rule);
+    filter: saturate(0.9);
+    transition: filter 0.5s ease;
   }
-  .card-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 4px;
-  }
-  .card-title { font-size: 1.02rem; font-weight: 700; }
-  .card-tag {
-    flex-shrink: 0;
-    font-size: 0.7rem;
+  .feature h3 {
+    font-family: "Zen Old Mincho", serif;
+    font-size: var(--t-feat);
     font-weight: 600;
-    color: var(--text-sub);
-    background: var(--accent-soft);
-    border-radius: 99px;
-    padding: 2px 10px;
-    white-space: nowrap;
+    line-height: 1.4;
+    letter-spacing: 0.03em;
+    margin: 20px 0 6px;
+    transition: color 0.25s ease;
   }
-  .card-desc { font-size: 0.85rem; color: var(--text-sub); }
+  .feature p { font-size: var(--t-body); color: var(--sumi-2); }
+  .feature .meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 12px;
+    font-size: var(--t-meta);
+    letter-spacing: 0.16em;
+    color: var(--ai);
+  }
 
-  /* Minor list */
-  .minor { display: grid; gap: 8px; }
-  .minor a {
-    display: flex;
+  /* ---------- 目次 ---------- */
+  h2 { margin: clamp(60px, 14vw, 88px) 0 0; }
+
+  .works { list-style: none; counter-reset: work; }
+
+  .work a {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: baseline;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px 14px;
-    border-radius: 12px;
+    column-gap: clamp(14px, 4vw, 22px);
+    padding-block: clamp(20px, 5vw, 26px);
+    border-top: 1px solid var(--rule);
     text-decoration: none;
-    color: var(--text);
-    font-size: 0.88rem;
-    border: 1px solid var(--line);
-    background: transparent;
+    color: inherit;
   }
-  .minor a:hover { background: var(--accent-soft); }
-  .minor .minor-note { font-size: 0.75rem; color: var(--text-sub); white-space: nowrap; }
+  .work:last-child a { border-bottom: 1px solid var(--rule); }
 
-  /* Footer */
+  .work a::before {
+    counter-increment: work;
+    content: counter(work, decimal-leading-zero);
+    font-size: var(--t-meta);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+    color: var(--sumi-2);
+    opacity: 0.75;
+  }
+
+  .work h3 {
+    font-family: "Zen Old Mincho", serif;
+    font-size: var(--t-item);
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+    transition: color 0.25s ease;
+  }
+  .work p { font-size: var(--t-body); line-height: 1.8; color: var(--sumi-2); }
+  .work .meta {
+    display: block;
+    margin-top: 8px;
+    font-size: var(--t-meta);
+    letter-spacing: 0.16em;
+    color: var(--ai);
+  }
+
+  .arrow {
+    align-self: center;
+    font-size: 0.9rem;
+    color: var(--sumi-2);
+    transition: transform 0.3s cubic-bezier(.22,1,.36,1), color 0.3s ease;
+  }
+
+  /* スマホではホバーは発火しない。タップの手応えを用意する */
+  a:active { opacity: 0.55; }
+  @media (hover: hover) {
+    .work a:hover .arrow, .feature:hover .arrow { transform: translateX(5px); color: var(--ai); }
+    .work a:hover h3, .feature:hover h3 { color: var(--ai); }
+    .feature:hover img { filter: saturate(1.04); }
+  }
+  a:focus-visible { outline: 2px solid var(--ai); outline-offset: 4px; }
+
+  /* ---------- 脚 ---------- */
   footer {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--line);
-    text-align: center;
+    margin-top: clamp(56px, 13vw, 82px);
+    padding-top: 30px;
+    border-top: 1px solid var(--rule);
   }
   .x-link {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-decoration: none;
-    color: var(--text);
-    font-size: 0.92rem;
-    font-weight: 600;
-    padding: 10px 22px;
-    border: 1px solid var(--line);
-    border-radius: 99px;
-    background: var(--surface);
-    box-shadow: var(--shadow);
+    color: var(--sumi);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--sumi);
+    transition: color 0.25s ease, border-color 0.25s ease;
   }
-  .x-link:hover { border-color: var(--text-sub); }
-  .x-link svg { width: 15px; height: 15px; fill: currentColor; }
-  .copy {
-    margin-top: 24px;
-    font-size: 0.72rem;
-    color: var(--text-sub);
+  .x-link svg { width: 14px; height: 14px; fill: currentColor; }
+  @media (hover: hover) { .x-link:hover { color: var(--ai); border-color: var(--ai); } }
+  .colophon {
+    margin-top: 26px;
+    font-size: var(--t-meta);
+    letter-spacing: 0.1em;
+    color: var(--sumi-2);
+  }
+
+  /* ---------- 動き ----------
+     対応ブラウザだけの上乗せ。既定は「最初から見えている」状態。
+     ファーストビュー(名乗り・実数)には一切かけない。 */
+  @keyframes rise {
+    from { opacity: 0; translate: 0 12px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .work, .feature {
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 5% cover 22%;
+      }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
+
   <header>
-    <div class="avatar" aria-hidden="true">ミ</div>
+    <p class="label kicker">INDIE MAKER — ENTERTAINMENT</p>
     <h1>ミヤケ</h1>
-    <p class="role">エンタメの「好き」をサービスにする個人開発者</p>
-    <p class="bio">読書、音楽、サッカー観戦——自分が好きなエンタメの楽しみ方を、ひとつずつアプリやサイトのかたちにしています。作ったものはすべてこのページから。</p>
+    <p class="lede">好きなエンタメの、<em>楽しみ方のほうを</em>つくっています。読書、水墨画、ラジオ、サッカー。ひとりで企画して、つくって、運用まで続けているものを並べました。</p>
+    <p class="note">つくるより、続けるほうが難しい。だから設計の種明かしと、うまくいかなかったときの数字のほうをよく書きます。</p>
+
+    <div class="facts">
+      <div class="fact"><b>2</b><span>IOS APPS</span></div>
+      <div class="fact"><b>75</b><span>EPISODES</span></div>
+      <div class="fact"><b>3</b><span>WEB SITES</span></div>
+    </div>
   </header>
 
-  <h2>Products</h2>
-  <div class="cards">
-    <a class="card" href="https://apps.apple.com/jp/app/id6789905132">
-      <div class="card-head">
-        <span class="card-title">なかみの本棚</span>
-        <span class="card-tag">iOS</span>
-      </div>
-      <p class="card-desc">読書で出会った引用を貯めていく、静かな本棚アプリ。</p>
-    </a>
-    <a class="card" href="https://apps.apple.com/jp/app/id6795591095">
-      <div class="card-head">
-        <span class="card-title">Sumi: Living Ink Paintings</span>
-        <span class="card-tag">iOS</span>
-      </div>
-      <p class="card-desc">ゆっくりと動く水墨画を眺める、余白のためのアプリ。</p>
-    </a>
-    <a class="card" href="https://youtube.com/@new-standard-radio1">
-      <div class="card-head">
-        <span class="card-title">ニュースタンダードラジオ</span>
-        <span class="card-tag">Podcast / YouTube</span>
-      </div>
-      <p class="card-desc">同級生ふたりが30代の仕事・お金・暮らしをゆるく話すトークラジオ。</p>
-    </a>
-    <a class="card" href="https://j-mikata.net">
-      <div class="card-head">
-        <span class="card-title">Jのミカタ</span>
-        <span class="card-tag">Web</span>
-      </div>
-      <p class="card-desc">Jリーグ観戦をもっと面白くする観戦ガイドサイト。</p>
-    </a>
-  </div>
+  <a class="feature" href="https://apps.apple.com/jp/app/id6795591095">
+    <img src="assets/sumi-wide.jpg" alt="Sumiの水墨画シーン「深山瀑布」" width="903" height="677" fetchpriority="high" decoding="async">
+    <h3>Sumi: Living Ink Paintings</h3>
+    <p>水墨画が、ゆっくり動きつづける。眺めるためだけのアプリ。買い切り、広告なし、通知なし。</p>
+    <span class="meta">IOS — APP STORE <span class="arrow" aria-hidden="true">→</span></span>
+  </a>
 
-  <h2>Others</h2>
-  <div class="minor">
-    <a href="https://syake03.github.io/kosodate-cards/">
-      <span>子育ての地図</span>
-      <span class="minor-note">Web</span>
-    </a>
-    <a href="https://japantriptools.com">
-      <span>japantriptools</span>
-      <span class="minor-note">Web</span>
-    </a>
-  </div>
+  <h2 class="label">OTHER WORKS</h2>
+  <ul class="works">
+
+    <li class="work">
+      <a href="https://apps.apple.com/jp/app/id6789905132">
+        <div>
+          <h3>なかみの本棚</h3>
+          <p>読んで線を引いた言葉を、しまっておく場所。静かに使える読書アプリ。</p>
+          <span class="meta">IOS — APP STORE</span>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+
+    <li class="work">
+      <a href="https://youtube.com/@new-standard-radio1">
+        <div>
+          <h3>ニュースタンダードラジオ</h3>
+          <p>中学からの同級生と、30代の仕事・お金・暮らしをゆるく話しています。75回配信中。</p>
+          <span class="meta">PODCAST — YOUTUBE / SPOTIFY</span>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+
+    <li class="work">
+      <a href="https://j-mikata.net">
+        <div>
+          <h3>Jのミカタ</h3>
+          <p>Jリーグを観に行く人のための、実用の観戦ガイド。全国のスタジアムを取材と実測で。</p>
+          <span class="meta">WEB</span>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+
+    <li class="work">
+      <a href="https://syake03.github.io/kosodate-cards/">
+        <div>
+          <h3>子育ての地図</h3>
+          <p>迷いやすいところに、根拠のある道しるべを。</p>
+          <span class="meta">WEB</span>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+
+    <li class="work">
+      <a href="https://japantriptools.com">
+        <div>
+          <h3>japantriptools</h3>
+          <p>訪日旅行者向けの実用ツール群。こちらは英語のみ。</p>
+          <span class="meta">WEB — ENGLISH</span>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+
+  </ul>
 
   <footer>
     <a class="x-link" href="https://x.com/syake1001">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       @syake1001
     </a>
-    <p class="copy">© 2026 ミヤケ</p>
+    <p class="colophon">© 2026 ミヤケ</p>
   </footer>
+
 </div>
 </body>
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>OGP source</title>
+<!--
+  OGP画像(1200x630)の版下。ブラウザで1200x630で開いて撮り、
+  assets/ogp.jpg として保存する。サイト本体と同じ色・同じ書体で作ること。
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600&display=block">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background: #F7F4ED;
+    color: #26241F;
+    font-family: "Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+  }
+  .grain {
+    position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .left { padding: 78px 56px 66px 78px; display: flex; flex-direction: column; }
+  .kicker {
+    font-size: 15px; font-weight: 700; letter-spacing: .4em; color: #2F5170;
+  }
+  h1 {
+    font-family: "Zen Old Mincho", serif; font-weight: 600;
+    font-size: 132px; line-height: 1; letter-spacing: .08em;
+    margin: 34px 0 30px;
+  }
+  .lede {
+    font-size: 26px; line-height: 1.75; letter-spacing: .02em;
+    font-feature-settings: "palt";
+  }
+  .spacer { flex: 1; }
+  .works {
+    display: flex; flex-wrap: wrap; gap: 10px 20px;
+    font-size: 16px; letter-spacing: .06em; color: #6B6355;
+    padding-top: 22px; border-top: 1px solid #DCD5C7;
+  }
+  .works b { font-weight: 400; }
+  .works .sep { color: #C9C0AE; }
+  .right { position: relative; overflow: hidden; border-left: 1px solid #DCD5C7; }
+  .right img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 40%; display: block; }
+</style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="left">
+    <p class="kicker">INDIE MAKER — ENTERTAINMENT</p>
+    <h1>ミヤケ</h1>
+    <p class="lede">好きなエンタメの、楽しみ方のほうを<br>つくっています。</p>
+    <div class="spacer"></div>
+    <div class="works">
+      <b>なかみの本棚</b><span class="sep">/</span>
+      <b>Sumi</b><span class="sep">/</span>
+      <b>ニュースタンダードラジオ</b><span class="sep">/</span>
+      <b>Jのミカタ</b>
+    </div>
+  </div>
+  <div class="right">
+    <img src="../assets/sumi-wide.jpg" alt="">
+  </div>
+</body>
+</html>
