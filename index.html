@@ -30,6 +30,7 @@
     --t-item: clamp(1.08rem, 0.96rem + 0.8vw, 1.32rem);
     --t-body: clamp(0.875rem, 0.845rem + 0.16vw, 0.92rem);
     --t-meta: 0.685rem;
+    --num-col: 1.7rem;   /* 連番の桁。リンク行のインデント計算に使う */
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -115,13 +116,13 @@
   /* ---- 目次 ---- */
   h2 { margin: clamp(56px,13vw,84px) 0 0; }
   .works { list-style:none; counter-reset:work; }
-  .work a {
-    display:grid; grid-template-columns:auto 1fr auto; align-items:baseline;
+  .work > a {
+    display:grid; grid-template-columns:var(--num-col) 1fr auto; align-items:baseline;
     column-gap: clamp(14px,4vw,22px); padding-block: clamp(19px,4.6vw,25px);
     border-top:1px solid var(--rule); text-decoration:none; color:inherit;
   }
-  .work:last-child a { border-bottom:1px solid var(--rule); }
-  .work a::before {
+  .work:last-child > a { border-bottom:1px solid var(--rule); }
+  .work > a::before {
     counter-increment:work; content:counter(work,decimal-leading-zero);
     font-size:var(--t-meta); font-variant-numeric:tabular-nums; letter-spacing:.08em;
     color:var(--ink-2); opacity:.75;
@@ -129,12 +130,33 @@
   .work h3 { font-size:var(--t-item); font-weight:600; line-height:1.45; letter-spacing:.02em; margin-bottom:4px; transition:color .25s ease; }
   .work p { font-size:var(--t-body); line-height:1.8; color:var(--ink-2); }
   .work .meta { display:block; margin-top:8px; font-size:var(--t-meta); letter-spacing:.16em; color:var(--ai); }
+  /* 行き先が複数ある作品は、meta を本物のリンクにする。
+     <a>の入れ子はHTMLとして不正なので、行の<a>の兄弟として置き、
+     インデントだけ連番カラムぶん合わせている。 */
+  .work--multi > a { padding-bottom: 7px; }
+  .work--multi:last-child > a { border-bottom: 0; }
+  .work--multi:last-child { border-bottom: 1px solid var(--rule); }
+  .work-links {
+    padding-left: calc(var(--num-col) + clamp(14px,4vw,22px));
+    padding-bottom: clamp(19px,4.6vw,25px);
+    font-size: var(--t-meta); letter-spacing:.16em; line-height:1.6;
+  }
+  .work-links a {
+    display: inline-block;
+    color: var(--ai); text-decoration:none;
+    padding: 9px 2px;           /* 指で押せる高さを確保する */
+    margin: -9px 0;             /* 見た目の行間は変えない */
+    border-bottom:1px solid transparent;
+  }
+  .work-links .sep { color: var(--ink-2); opacity:.55; margin:0 .45em; }
+  @media (hover:hover) { .work-links a:hover { border-bottom-color: var(--ai); } }
+
   .arrow { align-self:center; font-size:.9rem; color:var(--ink-2); transition:transform .3s cubic-bezier(.22,1,.36,1), color .3s ease; }
 
   a:active { opacity:.55; }
   @media (hover:hover) {
-    .work a:hover .arrow, .feature:hover .arrow { transform:translateX(5px); color:var(--ai); }
-    .work a:hover h3, .feature:hover h3 { color:var(--ai); }
+    .work > a:hover .arrow, .feature:hover .arrow { transform:translateX(5px); color:var(--ai); }
+    .work > a:hover h3, .feature:hover h3 { color:var(--ai); }
   }
   a:focus-visible { outline:2px solid var(--ai); outline-offset:4px; }
 
@@ -181,10 +203,12 @@
       <p>水墨画が、ゆっくり動きつづける。眺めるためだけのアプリ。買い切り、広告なし、通知なし。</p>
       <span class="meta">IOS — APP STORE</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
 
-    <li class="work"><a href="https://youtube.com/@new-standard-radio1"><div>
+    <li class="work work--multi"><a href="https://youtube.com/@new-standard-radio1"><div>
       <h3>ニュースタンダードラジオ</h3>
-      <p>中学からの同級生と、30代の仕事・お金・暮らしをゆるく話しています。2023年から、ほぼ毎週。</p>
-      <span class="meta">PODCAST — YOUTUBE / SPOTIFY</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
+      <p>中学からの同級生と、30代の仕事・お金・暮らしをゆるく話しています。2023年から、ほぼ毎週。</p></div><span class="arrow" aria-hidden="true">→</span></a>
+      <p class="work-links">PODCAST —
+        <a href="https://youtube.com/@new-standard-radio1">YOUTUBE</a><span class="sep">/</span><a href="https://open.spotify.com/show/0LfkUwffmPfjDTGIgxsj26">SPOTIFY</a>
+      </p></li>
 
     <li class="work"><a href="https://j-mikata.net"><div>
       <h3>Jのミカタ</h3>
