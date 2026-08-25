@@ -110,7 +110,7 @@ CH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 "$CH" --headless --disable-gpu --hide-scrollbars --force-device-scale-factor=2 \
   --window-size=500,1000 --virtual-time-budget=9000 \
   --screenshot=tools/shots/xxx.png "https://example.com"
-# 共通枠に入れて書き出す(mode=phone / square)
+# 共通枠に入れて書き出す(mode=phone / square / wide)
 "$CH" --headless --disable-gpu --hide-scrollbars --force-device-scale-factor=2 \
   --window-size=1000,660 --virtual-time-budget=6000 --screenshot=/tmp/f.png \
   "http://localhost:4321/tools/frame.html?img=shots/xxx.png&mode=phone"
@@ -141,3 +141,14 @@ Jekyll の処理を丸ごと飛ばす。2026-08-25 に原因不明の `Page buil
 ```bash
 gh api repos/syake03/syake03.github.io/pages/builds --jq '.[0:3][] | "\(.created_at) \(.status) \(.error.message // "-")"'
 ```
+
+枠のモードは3つ。**何を見せたいかで選ぶ。**
+
+| mode | 見え方 | 使いどころ |
+|---|---|---|
+| `phone` | 端末の枠に画面を流し込む | アプリ・サイトの「中身」を見せたいとき |
+| `square` | 正方形のジャケット | ラジオのように作品そのものが四角い絵のとき |
+| `wide` | 横長の帯 | ロゴ/ヘッダーだけを見せたいとき(Jのミカタ) |
+
+ヘッダー帯を切り出すときは、**中央ではなく左端寄り(x=20など)の列で明るさを測る**こと。
+中央だと白いロゴ文字を「帯の終わり」と誤検出する(実際に踏んだ)。
