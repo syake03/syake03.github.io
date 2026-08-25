@@ -131,3 +131,13 @@ sips -z 660 1000 -s format jpeg -s formatOptions 78 /tmp/f.png --out assets/shot
 一度この誤りで、他人のサイトへリンクし、そのスクリーンショットをポートフォリオに載せてしまった。
 **URLが200を返すことは「本人のサイトである」証明にはならない。**
 リンクを足すときは、必ず各プロジェクトの STATUS.md / SPEC で実際のドメインを確認すること。
+
+## GitHub Pages が Page build failed で落ちたら
+
+`.nojekyll` を置いてある。この site は素のHTMLで Jekyll を必要としないため、
+Jekyll の処理を丸ごと飛ばす。2026-08-25 に原因不明の `Page build failed` が
+連続したときに追加した(Liquid記法は無かった)。ビルド状況は:
+
+```bash
+gh api repos/syake03/syake03.github.io/pages/builds --jq '.[0:3][] | "\(.created_at) \(.status) \(.error.message // "-")"'
+```
