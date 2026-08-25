@@ -95,68 +95,51 @@
 
   /* ---- 主役 ---- */
   body { overflow-x: hidden; }
-  .feature { position:relative; display:block; margin-top: clamp(16px,4vw,28px); text-decoration:none; color:inherit; }
-  .feature::before {
-    content:""; position:absolute; z-index:-1;
-    top:38%; bottom:-18px; left:50%; width:100vw;
-    transform:translateX(-50%);
-    background: var(--panel);
-  }
-  .feature img {
-    width:100%; height:auto; aspect-ratio: 1000/660; object-fit:cover; display:block;
-    border:1px solid var(--rule); border-radius:6px; background: var(--panel);
-  }
-  .feature h3 {
-    font-size: var(--t-feat); font-weight:600; line-height:1.4; letter-spacing:.02em;
-    margin:20px 0 6px; transition:color .25s ease;
-  }
-  .feature p { font-size: var(--t-body); color: var(--ink-2); }
-  .feature .meta { display:inline-flex; align-items:center; gap:9px; margin-top:12px; font-size:var(--t-meta); letter-spacing:.16em; color:var(--ai); }
 
-  /* ---- 目次 ---- */
-  h2 { margin: clamp(56px,13vw,84px) 0 0; }
-  .works { list-style:none; counter-reset:work; }
-  .work > a {
-    display:grid; grid-template-columns:var(--num-col) 1fr auto; align-items:baseline;
-    column-gap: clamp(14px,4vw,22px); padding-block: clamp(19px,4.6vw,25px);
-    border-top:1px solid var(--rule); text-decoration:none; color:inherit;
+  /* ---- 作品 ---- 全作品を同じ情報量(画+説明+行き先)で並べる */
+  h2 { margin: clamp(52px,12vw,80px) 0 clamp(20px,5vw,30px); }
+
+  .works { list-style:none; display:grid; gap: clamp(48px,11vw,72px); }
+
+  .work { counter-increment: work; }
+  .work .shot {
+    display:block; text-decoration:none; color:inherit;
   }
-  .work:last-child > a { border-bottom:1px solid var(--rule); }
-  .work > a::before {
-    counter-increment:work; content:counter(work,decimal-leading-zero);
+  .work .shot img {
+    width:100%; height:auto; aspect-ratio:1000/660; object-fit:cover; display:block;
+    border:1px solid var(--rule); border-radius:6px; background:var(--panel);
+  }
+  .work .head { display:flex; align-items:baseline; gap:10px; margin:18px 0 6px; }
+  .work .no {
     font-size:var(--t-meta); font-variant-numeric:tabular-nums; letter-spacing:.08em;
     color:var(--ink-2); opacity:.75;
   }
-  .work h3 { font-size:var(--t-item); font-weight:600; line-height:1.45; letter-spacing:.02em; margin-bottom:4px; transition:color .25s ease; }
-  .work p { font-size:var(--t-body); line-height:1.8; color:var(--ink-2); }
-  .work .meta { display:block; margin-top:8px; font-size:var(--t-meta); letter-spacing:.16em; color:var(--ai); }
-  /* 行き先が複数ある作品は、meta を本物のリンクにする。
-     <a>の入れ子はHTMLとして不正なので、行の<a>の兄弟として置き、
-     インデントだけ連番カラムぶん合わせている。 */
-  .work--multi > a { padding-bottom: 7px; }
-  .work--multi:last-child > a { border-bottom: 0; }
-  .work--multi:last-child { border-bottom: 1px solid var(--rule); }
-  .work-links {
-    padding-left: calc(var(--num-col) + clamp(14px,4vw,22px));
-    padding-bottom: clamp(19px,4.6vw,25px);
-    font-size: var(--t-meta); letter-spacing:.16em; line-height:1.6;
+  .work .no::before { content: counter(work, decimal-leading-zero); }
+  .work h3 {
+    font-size: var(--t-item); font-weight:600; line-height:1.45; letter-spacing:.02em;
+    transition:color .25s ease;
   }
-  .work-links a {
-    display: inline-block;
-    color: var(--ai); text-decoration:none;
-    padding: 9px 2px;           /* 指で押せる高さを確保する */
-    margin: -9px 0;             /* 見た目の行間は変えない */
+  .work p { font-size:var(--t-body); line-height:1.85; color:var(--ink-2); }
+
+  /* 行き先。1つでも複数でも同じ見た目にする */
+  .work .go {
+    display:flex; flex-wrap:wrap; align-items:center;
+    margin-top:12px; font-size:var(--t-meta); letter-spacing:.16em; color:var(--ink-2);
+  }
+  .work .go a {
+    display:inline-block; color:var(--ai); text-decoration:none;
+    padding:13px 3px; margin:-13px 0;      /* 見た目を変えずタップ高44pxを確保 */
     border-bottom:1px solid transparent;
   }
-  .work-links .sep { color: var(--ink-2); opacity:.55; margin:0 .45em; }
-  @media (hover:hover) { .work-links a:hover { border-bottom-color: var(--ai); } }
-
-  .arrow { align-self:center; font-size:.9rem; color:var(--ink-2); transition:transform .3s cubic-bezier(.22,1,.36,1), color .3s ease; }
+  .work .go .sep { opacity:.55; margin:0 .45em; }
+  .work .go .kind { margin-right:.5em; }
+  .work .go .arrow { margin-left:.5em; transition:transform .3s cubic-bezier(.22,1,.36,1); display:inline-block; }
 
   a:active { opacity:.55; }
   @media (hover:hover) {
-    .work > a:hover .arrow, .feature:hover .arrow { transform:translateX(5px); color:var(--ai); }
-    .work > a:hover h3, .feature:hover h3 { color:var(--ai); }
+    .work .shot:hover h3 { color:var(--ai); }
+    .work .shot:hover .arrow { transform:translateX(5px); }
+    .work .go a:hover { border-bottom-color:var(--ai); }
   }
   a:focus-visible { outline:2px solid var(--ai); outline-offset:4px; }
 
@@ -189,41 +172,63 @@
     <p class="lede">好きなエンタメの、<em>入り口と出口を</em>つくっています。</p>
   </header>
 
-  <a class="feature" href="https://apps.apple.com/jp/app/id6789905132">
-    <img src="assets/nakami-hero.jpg" alt="なかみの本棚の画面。集めた言葉が縦に並んでいる" width="1000" height="660" fetchpriority="high" decoding="async">
-    <h3>なかみの本棚</h3>
-    <p>読んで線を引いた言葉を、しまっておく場所。本の一行も、母の一言も、同じ棚に。静かに使える読書アプリです。</p>
-    <span class="meta">IOS — APP STORE <span class="arrow" aria-hidden="true">→</span></span>
-  </a>
-
-  <h2 class="label">OTHER WORKS</h2>
+  <h2 class="label">WORKS</h2>
   <ul class="works">
-    <li class="work"><a href="https://apps.apple.com/jp/app/id6795591095"><div>
-      <h3>Sumi: Living Ink Paintings</h3>
-      <p>水墨画が、ゆっくり動きつづける。眺めるためだけのアプリ。買い切り、広告なし、通知なし。</p>
-      <span class="meta">IOS — APP STORE</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
 
-    <li class="work work--multi"><a href="https://youtube.com/@new-standard-radio1"><div>
-      <h3>ニュースタンダードラジオ</h3>
-      <p>中学からの同級生と、30代の仕事・お金・暮らしをゆるく話しています。2023年から、ほぼ毎週。</p></div><span class="arrow" aria-hidden="true">→</span></a>
-      <p class="work-links">PODCAST —
-        <a href="https://youtube.com/@new-standard-radio1">YOUTUBE</a><span class="sep">/</span><a href="https://open.spotify.com/show/0LfkUwffmPfjDTGIgxsj26">SPOTIFY</a>
-      </p></li>
+    <li class="work">
+      <a class="shot" href="https://apps.apple.com/jp/app/id6789905132">
+        <img src="assets/nakami-hero.jpg" alt="なかみの本棚の画面。集めた言葉が縦に並んでいる" width="1000" height="660" fetchpriority="high" decoding="async">
+        <div class="head"><span class="no"></span><h3>なかみの本棚</h3></div>
+        <p>読んで線を引いた言葉を、しまっておく場所。本の一行も、母の一言も、同じ棚に。出典は書影から補完でき、集めた言葉は縦組みの画像にして持ち出せます。</p>
+      </a>
+      <p class="go"><span class="kind">IOS —</span><a href="https://apps.apple.com/jp/app/id6789905132">APP STORE<span class="arrow" aria-hidden="true">→</span></a></p>
+    </li>
 
-    <li class="work"><a href="https://j-mikata.net"><div>
-      <h3>Jのミカタ</h3>
-      <p>Jリーグを観に行く人のための、実用の観戦ガイド。全国のスタジアムを取材と実測で。</p>
-      <span class="meta">WEB</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li class="work">
+      <a class="shot" href="https://apps.apple.com/jp/app/id6795591095">
+        <img src="assets/shot-sumi.jpg" alt="Sumiの画面。水墨画「深山瀑布」が動いている" width="1000" height="660" loading="lazy" decoding="async">
+        <div class="head"><span class="no"></span><h3>Sumi: Living Ink Paintings</h3></div>
+        <p>水墨画が、ゆっくり動きつづける。眺めるためだけのアプリ。滝・富士・鯉・月夜の竹など全5景が、朝・夕・夜で表情を変えます。買い切り、広告なし、通知なし。</p>
+      </a>
+      <p class="go"><span class="kind">IOS —</span><a href="https://apps.apple.com/jp/app/id6795591095">APP STORE<span class="arrow" aria-hidden="true">→</span></a></p>
+    </li>
 
-    <li class="work"><a href="https://syake03.github.io/kosodate-cards/"><div>
-      <h3>子育ての地図</h3>
-      <p>迷いやすいところに、根拠のある道しるべを。</p>
-      <span class="meta">WEB</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li class="work">
+      <a class="shot" href="https://youtube.com/@new-standard-radio1">
+        <img src="assets/shot-nsr.jpg" alt="ニュースタンダードラジオのジャケット" width="1000" height="660" loading="lazy" decoding="async">
+        <div class="head"><span class="no"></span><h3>ニュースタンダードラジオ</h3></div>
+        <p>中学からの同級生ふたりで、30代の仕事・お金・暮らしをゆるく話しています。2023年から、ほぼ毎週。映画や漫画の感想から、真面目な話まで。ながら聴きのお供にどうぞ。</p>
+      </a>
+      <p class="go"><span class="kind">PODCAST —</span><a href="https://youtube.com/@new-standard-radio1">YOUTUBE</a><span class="sep">/</span><a href="https://open.spotify.com/show/0LfkUwffmPfjDTGIgxsj26">SPOTIFY</a></p>
+    </li>
 
-    <li class="work"><a href="https://japantriptools.com"><div>
-      <h3>japantriptools</h3>
-      <p>訪日旅行者向けの実用ツール群。こちらは英語のみ。</p>
-      <span class="meta">WEB — ENGLISH</span></div><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li class="work">
+      <a class="shot" href="https://j-mikata.net">
+        <img src="assets/shot-jmikata.jpg" alt="Jのミカタのトップページ" width="1000" height="660" loading="lazy" decoding="async">
+        <div class="head"><span class="no"></span><h3>Jのミカタ</h3></div>
+        <p>Jリーグを観に行く人のための、実用の観戦ガイド。全国のスタジアムを、席の見え方・行き方・周辺の宿まで実測でまとめています。秋春制1年目の変更点も追跡中。</p>
+      </a>
+      <p class="go"><span class="kind">WEB —</span><a href="https://j-mikata.net">J-MIKATA.NET<span class="arrow" aria-hidden="true">→</span></a></p>
+    </li>
+
+    <li class="work">
+      <a class="shot" href="https://syake03.github.io/kosodate-cards/">
+        <img src="assets/shot-kosodate.jpg" alt="子育ての地図のトップページ" width="1000" height="660" loading="lazy" decoding="async">
+        <div class="head"><span class="no"></span><h3>子育ての地図</h3></div>
+        <p>迷いやすい子育てを、一枚の地図に。体験談ではなく、科学的根拠が確かめられて専門家の間で推奨されている「現時点の最善」を、エビデンス強度と影響度の2軸で整理しました。</p>
+      </a>
+      <p class="go"><span class="kind">WEB —</span><a href="https://syake03.github.io/kosodate-cards/">KOSODATE<span class="arrow" aria-hidden="true">→</span></a></p>
+    </li>
+
+    <li class="work">
+      <a class="shot" href="https://japantriptools.com">
+        <img src="assets/shot-jtt.jpg" alt="japantriptoolsのトップページ" width="1000" height="660" loading="lazy" decoding="async">
+        <div class="head"><span class="no"></span><h3>japantriptools</h3></div>
+        <p>訪日旅行者が自分で旅程を組むための実用ツール群。空港からの移動、宿の拠点選び、鉄道の選択肢と実際の費用を比較できます。こちらは英語のみ。</p>
+      </a>
+      <p class="go"><span class="kind">WEB —</span><a href="https://japantriptools.com">JAPANTRIPTOOLS<span class="arrow" aria-hidden="true">→</span></a></p>
+    </li>
+
   </ul>
 
   <footer>

@@ -13,8 +13,9 @@ X投稿 → プロフィール → **このページ** → 各プロダクト、
 
 - **カードを使わない。** カードUIは「等価な選択肢の一覧」を意味してしまい、個性が消える。境界は1pxの罫線だけ
 - **影を使わない**(なかみの本棚 `tokens.ts` と同じ規律)
-- **画像はページ全体で1枚だけ。** 全リンクにサムネを付けると、罫線にしても結局カードに見える。
-  1つだけ非対称に扱うことが、没個性を消す一番効く手
+- **全作品を同じ情報量で並べる**(2026-08-26に方針変更)。以前は「画像は1枚だけ・1つを非対称に」
+  としていたが、依頼者の判断でポートフォリオとして全作品に画・説明・行き先を揃えた。
+  カット(`assets/shot-*.jpg`)は `tools/frame.html` の共通枠で作り、地色と端末の形を統一している
 - **色は地・文字・アクセントの3つだけ。** アクセントは藍1色
 - **JSは0行**
 - **古びる数字を書かない。** 配信回数や本数は、公開のたびに嘘になる。
@@ -97,3 +98,27 @@ macOS の Chrome は **ウィンドウ幅を約460pxより狭くできない**�
   リンク行の中の `<a>` にも行のスタイルと連番カウンタが当たって崩れる(実際に踏んだ)
 - リンク行の `<a>` には `padding: 9px 2px; margin: -9px 0` を入れ、
   **見た目の行間を変えずにタップ高を44px以上**にする
+
+## 作品カットの作り直し方
+
+素材は `tools/shots/`(Webは実サイトのスクショ、アプリは実画面)。共通枠に流し込んで書き出す。
+
+```bash
+python3 -m http.server 4321 -d . &
+CH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+# Webサイトを撮る(幅は500以上。460未満は右が欠ける)
+"$CH" --headless --disable-gpu --hide-scrollbars --force-device-scale-factor=2 \
+  --window-size=500,1000 --virtual-time-budget=9000 \
+  --screenshot=tools/shots/xxx.png "https://example.com"
+# 共通枠に入れて書き出す(mode=phone / square)
+"$CH" --headless --disable-gpu --hide-scrollbars --force-device-scale-factor=2 \
+  --window-size=1000,660 --virtual-time-budget=6000 --screenshot=/tmp/f.png \
+  "http://localhost:4321/tools/frame.html?img=shots/xxx.png&mode=phone"
+sips -z 660 1000 -s format jpeg -s formatOptions 78 /tmp/f.png --out assets/shot-xxx.jpg
+```
+
+## CSSの詳細度で踏んだ罠
+
+`.work p { font-size: var(--t-body) }`(詳細度0,1,1)は `.work-links`(0,1,0)に**勝つ**。
+リンク行の文字だけ本文サイズ(14px)に膨らんでいた。`.work .work-links` のように
+**クラス2つ以上で書く**こと。`.work > a` に限定した件と同じ種類の事故。
