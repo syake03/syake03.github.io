@@ -109,6 +109,20 @@
     width:100%; height:auto; aspect-ratio:1000/660; object-fit:cover; display:block;
     border:1px solid var(--rule); border-radius:6px; background:var(--panel);
   }
+  /* 広い画面では、作品の画だけ本文カラムからはみ出させて大きく見せる。
+     本文は読みやすい幅のまま、主役の画だけ広げるのが狙い。 */
+  @media (min-width: 900px) {
+    .work .shot img {
+      width: calc(100% + 200px);
+      max-width: none;
+      margin-left: -100px;
+    }
+  }
+  /* ダークでは作品カットの地色(#EAE5D9)が背景と14.7:1になり、板のように光る。
+     明度を落として馴染ませる。 */
+  @media (prefers-color-scheme: dark) {
+    .work .shot img { filter: brightness(.74) contrast(.96); }
+  }
   .work .head { display:flex; align-items:baseline; gap:10px; margin:18px 0 6px; }
   .work .no {
     font-size:var(--t-meta); font-variant-numeric:tabular-nums; letter-spacing:.08em;
@@ -120,6 +134,11 @@
     transition:color .25s ease;
   }
   .work p { font-size:var(--t-body); line-height:1.85; color:var(--ink-2); }
+  /* 制作年と役割。ポートフォリオでは何をいつ作ったかが必須情報 */
+  .work .credit {
+    font-size: var(--t-meta); letter-spacing:.12em; color:var(--ink-2);
+    opacity:.85; margin: 0 0 8px;
+  }
 
   /* 行き先。1つでも複数でも同じ見た目にする */
   .work .go {
@@ -177,8 +196,9 @@
 
     <li class="work">
       <a class="shot" href="https://apps.apple.com/jp/app/id6789905132">
-        <img src="assets/nakami-hero.jpg" alt="なかみの本棚の画面。集めた言葉が縦に並んでいる" width="1000" height="660" fetchpriority="high" decoding="async">
+        <img src="assets/nakami-hero.jpg" alt="なかみの本棚の画面。集めた言葉が縦に並んでいる" width="1500" height="990" fetchpriority="high" decoding="async">
         <div class="head"><span class="no"></span><h3>なかみの本棚</h3></div>
+        <p class="credit">2026 — 企画・設計・実装・運用</p>
         <p>読んで線を引いた言葉を、しまっておく場所。本の一行も、母の一言も、同じ棚に。出典は書影から補完でき、集めた言葉は縦組みの画像にして持ち出せます。</p>
       </a>
       <p class="go"><span class="kind">IOS —</span><a href="https://apps.apple.com/jp/app/id6789905132">APP STORE<span class="arrow" aria-hidden="true">→</span></a></p>
@@ -186,8 +206,9 @@
 
     <li class="work">
       <a class="shot" href="https://apps.apple.com/jp/app/id6795591095">
-        <img src="assets/shot-sumi.jpg" alt="Sumiの画面。水墨画「深山瀑布」が動いている" width="1000" height="660" loading="lazy" decoding="async">
+        <img src="assets/shot-sumi.jpg" alt="Sumiの画面。水墨画「深山瀑布」が動いている" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>Sumi: Living Ink Paintings</h3></div>
+        <p class="credit">2026 — 企画・設計・実装・運用</p>
         <p>水墨画が、ゆっくり動きつづける。眺めるためだけのアプリ。滝・富士・鯉・月夜の竹など全5景が、朝・夕・夜で表情を変えます。買い切り、広告なし、通知なし。</p>
       </a>
       <p class="go"><span class="kind">IOS —</span><a href="https://apps.apple.com/jp/app/id6795591095">APP STORE<span class="arrow" aria-hidden="true">→</span></a></p>
@@ -195,8 +216,9 @@
 
     <li class="work">
       <a class="shot" href="https://youtube.com/@new-standard-radio1">
-        <img src="assets/shot-nsr.jpg" alt="ニュースタンダードラジオのジャケット" width="1000" height="660" loading="lazy" decoding="async">
+        <img src="assets/shot-nsr.jpg" alt="ニュースタンダードラジオのジャケット" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>ニュースタンダードラジオ</h3></div>
+        <p class="credit">2023〜 — 出演・制作・配信(ふたり番組)</p>
         <p>中学からの同級生ふたりで、30代の仕事・お金・暮らしをゆるく話しています。2023年から、ほぼ毎週。映画や漫画の感想から、真面目な話まで。ながら聴きのお供にどうぞ。</p>
       </a>
       <p class="go"><span class="kind">PODCAST —</span><a href="https://youtube.com/@new-standard-radio1">YOUTUBE</a><span class="sep">/</span><a href="https://open.spotify.com/show/0LfkUwffmPfjDTGIgxsj26">SPOTIFY</a></p>
@@ -204,8 +226,9 @@
 
     <li class="work">
       <a class="shot" href="https://j-mikata.net">
-        <img src="assets/shot-jmikata.jpg" alt="Jのミカタのヘッダー。秋春制1年目のJリーグを、いちばん分かりやすく。" width="1000" height="660" loading="lazy" decoding="async">
+        <img src="assets/shot-jmikata.jpg" alt="Jのミカタのヘッダー。秋春制1年目のJリーグを、いちばん分かりやすく。" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>Jのミカタ</h3></div>
+        <p class="credit">2026 — 企画・執筆・運用</p>
         <p>Jリーグを観に行く人のための、実用の観戦ガイド。全国のスタジアムを、席の見え方・行き方・周辺の宿まで実測でまとめています。秋春制1年目の変更点も追跡中。</p>
       </a>
       <p class="go"><span class="kind">WEB —</span><a href="https://j-mikata.net">J-MIKATA.NET<span class="arrow" aria-hidden="true">→</span></a></p>
@@ -213,8 +236,9 @@
 
     <li class="work">
       <a class="shot" href="https://syake03.github.io/kosodate-cards/">
-        <img src="assets/shot-kosodate.jpg" alt="子育ての地図のトップページ" width="1000" height="660" loading="lazy" decoding="async">
+        <img src="assets/shot-kosodate.jpg" alt="子育ての地図のトップページ" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>子育ての地図</h3></div>
+        <p class="credit">2026 — 企画・執筆・実装</p>
         <p>迷いやすい子育てを、一枚の地図に。体験談ではなく、科学的根拠が確かめられて専門家の間で推奨されている「現時点の最善」を、エビデンス強度と影響度の2軸で整理しました。</p>
       </a>
       <p class="go"><span class="kind">WEB —</span><a href="https://syake03.github.io/kosodate-cards/">KOSODATE<span class="arrow" aria-hidden="true">→</span></a></p>
@@ -222,8 +246,9 @@
 
     <li class="work">
       <a class="shot" href="https://triptoolsjapan.com">
-        <img src="assets/shot-tripjp.jpg" alt="Japan Trip Toolsのトップページ" width="1000" height="660" loading="lazy" decoding="async">
+        <img src="assets/shot-tripjp.jpg" alt="Japan Trip Toolsのトップページ" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>Japan Trip Tools</h3></div>
+        <p class="credit">2026 — 企画・実装・運用</p>
         <p>桜や紅葉の見頃に、自分の旅程が当たる確率はどれくらいか。気象庁の30年分の記録を、日本19都市ぶんの一つの数字に落としました。訪日旅行者向けで、英語のみ。</p>
       </a>
       <p class="go"><span class="kind">WEB —</span><a href="https://triptoolsjapan.com">TRIPTOOLSJAPAN.COM<span class="arrow" aria-hidden="true">→</span></a></p>
