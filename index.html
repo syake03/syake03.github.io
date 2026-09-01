@@ -55,7 +55,10 @@
     line-break: strict;
     -webkit-font-smoothing: antialiased;
   }
-  p { text-wrap: pretty; }
+  /* p に text-wrap:pretty は使わない。Safari は段落全体を最適化するため、
+     最終行が2〜3字で余るのを避けようとして全行を6字ぶん短く組み、
+     本文の右側だけ画からはみ出して空く。代わりに説明文の字数を
+     3行に収まる長さ(65〜69字)に調整して逃げている。 */
   h1, h2, h3, .lede { font-feature-settings:"palt"; text-wrap: balance; }
 
   .wrap {
@@ -199,7 +202,7 @@
         <img src="assets/nakami-hero.jpg" alt="なかみの本棚の画面。集めた言葉が縦に並んでいる" width="1500" height="990" fetchpriority="high" decoding="async">
         <div class="head"><span class="no"></span><h3>なかみの本棚</h3></div>
         <p class="credit">2026 — 企画・設計・実装・運用</p>
-        <p>読んで線を引いた言葉を、しまっておく場所。本の一行も、母の一言も、同じ棚に。出典は書影から補完でき、集めた言葉は縦組みの画像にして持ち出せます。</p>
+        <p>読んで線を引いた言葉を、しまっておく場所。本の一行も、母の一言も、同じ棚に。出典は書影から補完でき、縦組みの画像にして持ち出せます。</p>
       </a>
       <p class="go"><span class="kind">IOS —</span><a href="https://apps.apple.com/jp/app/id6789905132">APP STORE<span class="arrow" aria-hidden="true">→</span></a></p>
     </li>
@@ -209,7 +212,7 @@
         <img src="assets/shot-sumi.jpg" alt="Sumiの画面。水墨画「深山瀑布」が動いている" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>Sumi: Living Ink Paintings</h3></div>
         <p class="credit">2026 — 企画・設計・実装・運用</p>
-        <p>水墨画が、ゆっくり動きつづける。眺めるためだけのアプリ。滝・富士・鯉・月夜の竹など全5景が、朝・夕・夜で表情を変えます。買い切り、広告なし、通知なし。</p>
+        <p>水墨画が、ゆっくり動きつづける。眺めるためだけのアプリ。滝・富士・月夜の竹など全5景が、朝・夕・夜で表情を変えます。買い切り、通知なし。</p>
       </a>
       <p class="go"><span class="kind">IOS —</span><a href="https://apps.apple.com/jp/app/id6795591095">APP STORE<span class="arrow" aria-hidden="true">→</span></a></p>
     </li>
@@ -219,7 +222,7 @@
         <img src="assets/shot-nsr.jpg" alt="ニュースタンダードラジオのジャケット" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>ニュースタンダードラジオ</h3></div>
         <p class="credit">2023〜 — 出演・制作・配信(ふたり番組)</p>
-        <p>中学からの同級生ふたりで、30代の仕事・お金・暮らしをゆるく話しています。2023年から、ほぼ毎週。映画や漫画の感想から、真面目な話まで。ながら聴きのお供にどうぞ。</p>
+        <p>中学からの同級生ふたりで、30代の仕事・お金・暮らしをゆるく話しています。2023年から、ほぼ毎週。映画や漫画の感想も、真面目な話も。</p>
       </a>
       <p class="go"><span class="kind">PODCAST —</span><a href="https://youtube.com/@new-standard-radio1">YOUTUBE</a><span class="sep">/</span><a href="https://open.spotify.com/show/0LfkUwffmPfjDTGIgxsj26">SPOTIFY</a></p>
     </li>
@@ -229,7 +232,7 @@
         <img src="assets/shot-jmikata.jpg" alt="Jのミカタのヘッダー。秋春制1年目のJリーグを、いちばん分かりやすく。" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>Jのミカタ</h3></div>
         <p class="credit">2026 — 企画・執筆・運用</p>
-        <p>Jリーグを観に行く人のための、実用の観戦ガイド。全国のスタジアムを、席の見え方・行き方・周辺の宿まで実測でまとめています。秋春制1年目の変更点も追跡中。</p>
+        <p>Jリーグを観に行く人のための観戦ガイド。全国のスタジアムを、席の見え方・行き方・周辺の宿まで実測でまとめています。秋春制の変更点も追跡中。</p>
       </a>
       <p class="go"><span class="kind">WEB —</span><a href="https://j-mikata.net">J-MIKATA.NET<span class="arrow" aria-hidden="true">→</span></a></p>
     </li>
@@ -239,7 +242,7 @@
         <img src="assets/shot-kosodate.jpg" alt="子育ての地図のトップページ" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>子育ての地図</h3></div>
         <p class="credit">2026 — 企画・執筆・実装</p>
-        <p>迷いやすい子育てを、一枚の地図に。体験談ではなく、科学的根拠が確かめられて専門家の間で推奨されている「現時点の最善」を、エビデンス強度と影響度の2軸で整理しました。</p>
+        <p>迷いやすい子育てを、一枚の地図に。体験談ではなく、専門家が推奨する「現時点の最善」を、エビデンス強度と影響度の2軸で整理しました。</p>
       </a>
       <p class="go"><span class="kind">WEB —</span><a href="https://syake03.github.io/kosodate-cards/">KOSODATE<span class="arrow" aria-hidden="true">→</span></a></p>
     </li>
@@ -249,7 +252,7 @@
         <img src="assets/shot-tripjp.jpg" alt="Japan Trip Toolsのトップページ" width="1500" height="990" loading="lazy" decoding="async">
         <div class="head"><span class="no"></span><h3>Japan Trip Tools</h3></div>
         <p class="credit">2026 — 企画・実装・運用</p>
-        <p>桜や紅葉の見頃に、自分の旅程が当たる確率はどれくらいか。気象庁の30年分の記録を、日本19都市ぶんの一つの数字に落としました。訪日旅行者向けで、英語のみ。</p>
+        <p>桜や紅葉の見頃に、自分の旅程が当たる確率。気象庁の30年分の記録を、19都市ぶんの一つの数字にしました。訪日旅行者向け、英語のみ。</p>
       </a>
       <p class="go"><span class="kind">WEB —</span><a href="https://triptoolsjapan.com">TRIPTOOLSJAPAN.COM<span class="arrow" aria-hidden="true">→</span></a></p>
     </li>
